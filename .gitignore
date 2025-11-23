@@ -1,0 +1,47 @@
+
+
+*.env
+
+
+# ============================================
+# Jupyter
+# ============================================
+.ipynb_checkpoints/
+
+notebooks/*
+!notebooks/projetoML_cesar (1).ipynb
+
+
+# ============================================
+# MLflow
+# ============================================
+mlflow/
+
+# ============================================
+# Docker
+# ============================================
+
+docker-compose.override.yml
+docker-data/
+minio_data/
+
+
+# Volumes locais criados pelos containers
+data/
+storage/
+minio/
+
+# ============================================
+# OS files
+# ============================================
+.DS_Store
+Thumbs.db
+
+# ============================================
+# Project specific
+# ============================================
+
+# Arquivos de dados
+*.csv
+*.xlsx
+*.parquet

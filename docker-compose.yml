@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+
+  # ---------------------------------------------------
+  # 1. INGEST (roda automaticamente e depois encerra)
+  # ---------------------------------------------------
+  ingest:
+    build: ./ingest
+    container_name: ingest
+    depends_on:
+      - minio
+    environment:
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: minio123
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_BUCKET: data-bucket
+    restart: "no"   # roda uma vez e para
+
+  # ---------------------------------------------------
+  # 2. MINIO (armazenamento S3 local)
+  # ---------------------------------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # API
+      - "9001:9001"   # Console Web
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    volumes:
+      - ./minio_data:/data
+
+  # ---------------------------------------------------
+  # 3. MLFLOW TRACKING SERVER
+  # ---------------------------------------------------
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: mlflow
+    ports:
+      - "5000:5000"
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: minio123
+      MLFLOW_SERVER_ALLOWED_HOSTS: "*"
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:///mlflow.db
+      --default-artifact-root s3://mlflow/
+    depends_on:
+      - minio
+    volumes:
+      - ./mlflow:/mlflow
+
+
+  # ---------------------------------------------------
+  # 4. JUPYTER NOTEBOOK (modelagem manual)
+  # ---------------------------------------------------
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    container_name: jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      JUPYTER_TOKEN: "mlproject"
+      AWS_ACCESS_KEY_ID: minio
+      AWS_SECRET_ACCESS_KEY: minio123
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+    volumes:
+      - ./notebooks:/home/jovyan/work
