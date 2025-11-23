@@ -4,6 +4,8 @@ Este projeto implementa um pipeline completo de Machine Learning usando um ambie
 
 O objetivo é simular um fluxo real de MLOps leve usando ferramentas open source e armazenamento S3 compatível.
 
+# relatório do projeto
+https://docs.google.com/document/d/1nbMCiJsXzl_S02qg9dC4VQPypDCBnrrvzLyPkpbEr_U/edit?usp=sharing
 
 # Funcionalidades
 
