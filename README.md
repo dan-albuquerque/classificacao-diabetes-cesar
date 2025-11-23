@@ -7,6 +7,20 @@ O objetivo é simular um fluxo real de MLOps leve usando ferramentas open source
 # relatório do projeto
 https://docs.google.com/document/d/1nbMCiJsXzl_S02qg9dC4VQPypDCBnrrvzLyPkpbEr_U/edit?usp=sharing
 
+
+# Informações sobre a disciplina e o projeto
+Membros:
+  - Danilo Melo @dan-albuquerque
+  - Sofia Valadares
+  - Joao VIctor Ferraz
+  - Guilherme Silveira
+  - Maria Luiza Calife
+
+
+Nome da disciplina: Aprendizado de Máquina - 2025.2.
+
+Nome da instituição de ensino: CESAR School.
+
 # Funcionalidades
 
 * Ambiente totalmente containerizado usando Docker Compose
