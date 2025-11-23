@@ -1,0 +1,154 @@
+# Projeto de Treinamento e Rastreamento de Modelos com Docker, MinIO, MLflow e XGBoost
+
+Este projeto implementa um pipeline completo de Machine Learning usando um ambiente totalmente containerizado. Ele inclui ingestão de dados no MinIO, desenvolvimento e execução de experimentos em Jupyter, treinamento com XGBoost, validação repetida e rastreamento dos experimentos e artefatos via MLflow.
+
+O objetivo é simular um fluxo real de MLOps leve usando ferramentas open source e armazenamento S3 compatível.
+
+
+# Funcionalidades
+
+* Ambiente totalmente containerizado usando Docker Compose
+* MinIO como armazenamento S3 compatível
+* MLflow Tracking com backend SQLite e artefatos no MinIO
+* Jupyter Notebook com bibliotecas de ML pré-instaladas
+* Script de ingestão que cria bucket e envia dataset automaticamente
+* Treinamento com SMOTE, StratifiedKFold repetido e XGBoost
+* Logging automático de métricas, artefatos e modelo final no MLflow
+
+
+# Estrutura do Projeto
+
+```text
+.
+├── docker-compose.yml
+├── ingest.py
+│   └── ingest.py
+│   └── dockerfile
+├── requirements.txt
+├── notebooks/
+│   └── projetoML_cesar (1).ipynb
+└── README.md
+```
+
+# Pré requisitos
+
+* Docker
+* Docker Compose
+* Portas livres:
+  8888 (Jupyter)
+  9000 e 9001 (MinIO)
+  5000 (MLflow)
+
+# Arquivo `.env` (exemplo recomendado)
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+AWS_ACCESS_KEY=minio
+AWS_SECRET_KEY=minio123
+MINIO_URL=http://minio:9000
+
+MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+MLFLOW_TRACKING_URI=http://mlflow:5000
+
+BUCKET_DATA=data-bucket
+BUCKET_MLFLOW=mlflow
+```
+
+# Passo a passo
+
+## 1. Subir os containers
+
+```bash
+docker compose up -d
+```
+
+## 2. Criar os buckets no MinIO
+
+Acesse:
+
+[http://localhost:9001](http://localhost:9001)
+Usuário: minio
+Senha: minio123
+
+Crie os buckets:
+
+* data-bucket
+* mlflow
+
+## 3. Rodar ingestão de dados no MinIO
+
+Caso o ingest não rode automaticamente ou retorne algum erro:
+
+```bash
+docker compose exec jupyter python ingest.py
+```
+
+O script:
+
+* Cria o bucket `data-bucket` caso não exista
+* Baixa o dataset do Kaggle
+* Envia o CSV para o MinIO
+
+ 
+
+# Acessando o Jupyter
+
+Acesse:
+
+[http://localhost:8888/lab?token=mlproject](http://localhost:8888/lab?token=mlproject)
+
+Abra:
+
+`notebooks/projetoML_cesar (1).ipynb`
+
+Execute todas as células.
+O MLflow já deve estar rodando no container para registrar os experimentos.
+
+ 
+
+# Treinamento e Logging no MLflow
+
+O notebook realiza:
+
+* Limpeza e preparação do dataset
+* Validação repetida com StratifiedKFold
+* Treinamento do XGBoost com SMOTE
+* Geração das métricas
+* Logging no MLflow incluindo:
+
+  * Hiperparâmetros
+  * Métricas estatísticas
+  * Gráficos de boxplot
+  * Matriz de confusão
+  * Modelo final serializado
+
+Cada execução aparece como um run dentro do experimento `experimento_xgboost`.
+
+
+# Visualizando Experimentos no MLflow
+
+Acesse:
+
+[http://localhost:5000](http://localhost:5000)
+
+Você poderá navegar por runs, métricas, parâmetros, gráficos e artefatos.
+
+# Estrutura dos Experimentos
+
+Cada run contém:
+
+* Hiperparâmetros do XGBoost
+* Métricas: accuracy, precision, recall, f1
+* Intervalos de confiança
+* Boxplots das métricas
+* Matriz de confusão
+* Modelo final salvo no MinIO
+
+ 
+
+# Parar todos os serviços
+
+```bash
+docker compose down
+```
