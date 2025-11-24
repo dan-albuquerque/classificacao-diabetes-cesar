@@ -11,10 +11,10 @@ https://docs.google.com/document/d/1nbMCiJsXzl_S02qg9dC4VQPypDCBnrrvzLyPkpbEr_U/
 # Informações sobre a disciplina e o projeto
 Membros:
   - Danilo Melo @dan-albuquerque
-  - Sofia Valadares
-  - Joao VIctor Ferraz
+  - Sofia Valadares @sofiaValadares
+  - Joao VIctor Ferraz @
   - Guilherme Silveira
-  - Maria Luiza Calife
+  - Maria Luiza Calife @Maria Luiza Calife 
 
 
 Nome da disciplina: Aprendizado de Máquina - 2025.2.
