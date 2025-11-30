@@ -12,8 +12,8 @@ https://docs.google.com/document/d/1nbMCiJsXzl_S02qg9dC4VQPypDCBnrrvzLyPkpbEr_U/
 Membros:
   - Danilo Melo @dan-albuquerque
   - Sofia Valadares @sofiaValadares
-  - Joao VIctor Ferraz @
-  - Guilherme Silveira
+  - Joao VIctor Ferraz @JoaovfGoncalves
+  - Guilherme Silveira @guiga-sa
   - Maria Luiza Calife @Maria Luiza Calife 
 
 
@@ -37,12 +37,13 @@ Nome da instituição de ensino: CESAR School.
 ```text
 .
 ├── docker-compose.yml
-├── ingest.py
+├── ingest.py # modulo de ingestão
 │   └── ingest.py
 │   └── dockerfile
-├── requirements.txt
 ├── notebooks/
 │   └── projetoML_cesar (1).ipynb
+├── minio_data/  #gerado aós docker compose
+├── mlflow/  #gerado aós docker compose
 └── README.md
 ```
 
@@ -146,7 +147,7 @@ Cada execução aparece como um run dentro do experimento `experimento_xgboost`.
 
 Acesse:
 
-[http://localhost:5000](http://localhost:5000)
+http://localhost:5000
 
 Você poderá navegar por runs, métricas, parâmetros, gráficos e artefatos.
 
@@ -161,8 +162,6 @@ Cada run contém:
 * Matriz de confusão
 * Modelo final salvo no MinIO
 
- 
-
 # Parar todos os serviços
 
 ```bash
@@ -172,3 +171,11 @@ docker compose down
 
 # Observações sobre o projeto
 - decidimos não utilizar Snowflake para tratamento e estruturação dos dados pois o dataset não possui caracteristicas que exigem muitos tratamentos, a estruturação que realizamos está no Jupyter notebook
+
+Aqui vai um parágrafo claro e direto para colocar no README explicando a pipeline:
+
+---
+
+# Pipeline do Projeto
+
+A pipeline do projeto é composta por quatro etapas principais que funcionam de maneira integrada. Primeiro ocorre a ingestão automática dos dados, onde o serviço ingest coleta os dados do kaggle e envia os dados para o MinIO, que atua como armazenamento S3 local. Em seguida, o Jupyter Notebook é utilizado para análise, preparação dos dados, modelagem e visualização das métricas, incluindo gráficos de desempenho e validação. Durante esse processo, todos os experimentos, parâmetros, métricas e artefatos do modelo são registrados automaticamente no MLflow, permitindo rastreamento completo das execuções. Por fim, os resultados gerados no notebook, como gráficos, métricas e arquivos derivados, podem ser armazenados no MinIO, garantindo versionamento simples e mantendo todo o fluxo centralizado em uma arquitetura leve e fácil de operar.
