@@ -168,3 +168,7 @@ Cada run contém:
 ```bash
 docker compose down
 ```
+
+
+# Observações sobre o projeto
+- decidimos não utilizar Snowflake para tratamento e estruturação dos dados pois o dataset não possui caracteristicas que exigem muitos tratamentos, a estruturação que realizamos está no Jupyter notebook
