@@ -9,7 +9,7 @@ O objetivo é simular um fluxo real de MLOps leve usando ferramentas open source
 A pipeline do projeto é composta por quatro etapas principais que funcionam de maneira integrada. Primeiro ocorre a ingestão automática dos dados, onde o serviço ingest coleta os dados do kaggle e envia os dados para o MinIO, que atua como armazenamento S3 local. Em seguida, o Jupyter Notebook é utilizado para análise, preparação dos dados, modelagem e visualização das métricas, incluindo gráficos de desempenho e validação. Durante esse processo, todos os experimentos, parâmetros, métricas e artefatos do modelo são registrados automaticamente no MLflow, permitindo rastreamento completo das execuções e visualização das métricas do modelo gerado. Por fim, os resultados gerados no notebook, como gráficos, métricas e arquivos derivados, podem ser armazenados no MinIO, garantindo versionamento simples e mantendo todo o fluxo centralizado em uma arquitetura leve e fácil de operar.
 
 # relatório do projeto
-https://docs.google.com/document/d/1nbMCiJsXzl_S02qg9dC4VQPypDCBnrrvzLyPkpbEr_U/edit?usp=sharing
+https://docs.google.com/document/d/1NHlGTRXVHrlLtAbUthEXCNAhhZFqffBH4yzSOol2WKI/edit?usp=sharing
 
 # Informações sobre a disciplina e o projeto
 Membros:
